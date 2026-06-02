@@ -1,0 +1,1177 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The Little History of Computers</title>
+  <style>
+    :root {
+      --ink: #1e293b;
+      --muted: #526174;
+      --paper: #fff9ef;
+      --panel: #ffffff;
+      --sky: #b9e7ff;
+      --sun: #ffd447;
+      --leaf: #2f9e66;
+      --coral: #ff6b6b;
+      --blue: #3273dc;
+      --violet: #7c5cff;
+      --line: rgba(30, 41, 59, 0.16);
+      --shadow: 0 18px 50px rgba(30, 41, 59, 0.18);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      overflow: hidden;
+      background: #102235;
+      color: var(--ink);
+      font-family: ui-rounded, "Avenir Next", "Segoe UI", system-ui, sans-serif;
+    }
+
+    body {
+      display: grid;
+      place-items: center;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    .deck {
+      position: relative;
+      width: min(100vw, 177.78vh);
+      height: min(100vh, 56.25vw);
+      min-width: 320px;
+      min-height: 180px;
+      background: var(--paper);
+      overflow: hidden;
+      box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.15), 0 28px 90px rgba(0, 0, 0, 0.35);
+    }
+
+    .slides {
+      width: 100%;
+      height: 100%;
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      align-content: center;
+      gap: clamp(10px, 2vh, 20px);
+      padding: clamp(18px, 4vw, 58px);
+      background:
+        radial-gradient(circle at 10% 8%, rgba(255, 212, 71, 0.55), transparent 18%),
+        linear-gradient(180deg, #dff5ff 0%, #fff9ef 54%, #f1ffd8 100%);
+      opacity: 0;
+      pointer-events: none;
+      transform: translateX(24px);
+      transition: opacity 220ms ease, transform 220ms ease;
+    }
+
+    .slide.active {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateX(0);
+    }
+
+    .slide::after {
+      content: "";
+      position: absolute;
+      left: -3%;
+      right: -3%;
+      bottom: -14%;
+      height: 28%;
+      background:
+        radial-gradient(circle at 16% 12%, #ffe066 0 10px, transparent 11px),
+        radial-gradient(circle at 72% 22%, #ff8787 0 8px, transparent 9px),
+        linear-gradient(12deg, #65c96a, #9ee36b);
+      border-radius: 50% 50% 0 0;
+      z-index: 0;
+    }
+
+    .slide > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .kicker {
+      display: inline-flex;
+      width: fit-content;
+      align-items: center;
+      gap: 0.55em;
+      padding: 0.38em 0.72em;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.78);
+      border: 1px solid rgba(30, 41, 59, 0.12);
+      color: var(--muted);
+      font-size: clamp(15px, 1.9vw, 26px);
+      font-weight: 800;
+    }
+
+    h1,
+    h2 {
+      margin: 0;
+      color: var(--ink);
+      line-height: 1.02;
+      letter-spacing: 0;
+      text-wrap: balance;
+    }
+
+    h1 {
+      max-width: 14ch;
+      font-size: clamp(42px, 7.4vw, 112px);
+    }
+
+    h2 {
+      max-width: 16ch;
+      font-size: clamp(34px, 6vw, 88px);
+    }
+
+    p {
+      max-width: 36ch;
+      margin: 0;
+      color: var(--muted);
+      font-size: clamp(20px, 2.6vw, 38px);
+      line-height: 1.22;
+      font-weight: 750;
+    }
+
+    strong {
+      color: var(--ink);
+    }
+
+    .hero-slide {
+      grid-template-columns: minmax(380px, 0.75fr) minmax(50%, 1.25fr);
+      align-items: center;
+      gap: clamp(18px, 4vw, 60px);
+      padding-right: clamp(14px, 3vw, 44px);
+    }
+
+    .hero-slide h1 {
+      font-size: clamp(42px, 5.4vw, 76px);
+    }
+
+    .hero-image {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      border: 8px solid rgba(255, 255, 255, 0.88);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+      transform: rotate(1deg);
+    }
+
+    .history-photo {
+      width: min(46vw, 620px);
+      justify-self: end;
+      border: 8px solid rgba(255, 255, 255, 0.88);
+      border-radius: 8px;
+      background: white;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      transform: rotate(1deg);
+    }
+
+    .history-photo img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+      filter: sepia(0.12) contrast(1.04);
+    }
+
+    .history-photo figcaption {
+      padding: 0.55em 0.75em;
+      color: var(--muted);
+      background: rgba(255, 255, 255, 0.96);
+      font-size: clamp(12px, 1.2vw, 18px);
+      font-weight: 850;
+      line-height: 1.2;
+    }
+
+    .desktop-photo {
+      width: min(46vw, 620px);
+      justify-self: end;
+      border: 8px solid rgba(255, 255, 255, 0.88);
+      border-radius: 8px;
+      background: white;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      transform: rotate(1deg);
+    }
+
+    .desktop-photo img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: contain;
+      background: white;
+    }
+
+    .desktop-photo figcaption {
+      padding: 0.55em 0.75em;
+      color: var(--muted);
+      background: rgba(255, 255, 255, 0.96);
+      font-size: clamp(12px, 1.2vw, 18px);
+      font-weight: 850;
+      line-height: 1.2;
+    }
+
+    .photo-focus {
+      grid-template-columns: minmax(320px, 0.72fr) minmax(50%, 1.28fr);
+    }
+
+    .photo-focus .desktop-photo {
+      width: min(58vw, 760px);
+    }
+
+    .big-emoji {
+      width: min(36vw, 430px);
+      aspect-ratio: 1;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.76);
+      border: 2px solid rgba(30, 41, 59, 0.1);
+      box-shadow: var(--shadow);
+      font-size: clamp(88px, 18vw, 230px);
+      justify-self: end;
+    }
+
+    .split {
+      display: grid;
+      grid-template-columns: minmax(0, 0.94fr) minmax(320px, 1fr);
+      align-items: center;
+      gap: clamp(16px, 4vw, 64px);
+    }
+
+    .tiles {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: clamp(10px, 1.5vw, 20px);
+      max-width: min(760px, 48vw);
+    }
+
+    .tile {
+      min-height: clamp(92px, 11vw, 160px);
+      display: grid;
+      place-items: center;
+      gap: 6px;
+      padding: clamp(10px, 1.4vw, 20px);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.82);
+      border: 2px solid var(--line);
+      box-shadow: 0 10px 24px rgba(30, 41, 59, 0.08);
+      text-align: center;
+      font-size: clamp(18px, 2.25vw, 34px);
+      font-weight: 900;
+    }
+
+    .tile span {
+      font-size: clamp(34px, 5vw, 72px);
+      line-height: 1;
+    }
+
+    .timeline {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      align-items: stretch;
+      gap: clamp(8px, 1.4vw, 18px);
+      width: min(100%, 1100px);
+    }
+
+    .timeline.five-steps {
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      width: min(100%, 1180px);
+      gap: clamp(7px, 1vw, 14px);
+    }
+
+    .step {
+      min-height: clamp(116px, 15vw, 210px);
+      display: grid;
+      align-content: center;
+      justify-items: center;
+      gap: 8px;
+      padding: clamp(8px, 1.5vw, 18px);
+      border-radius: 8px;
+      color: white;
+      text-align: center;
+      box-shadow: var(--shadow);
+      font-weight: 900;
+      font-size: clamp(16px, 2vw, 28px);
+    }
+
+    .step:nth-child(1) { background: #8b5e34; }
+    .step:nth-child(2) { background: #2364aa; }
+    .step:nth-child(3) { background: #2f9e66; }
+    .step:nth-child(4) { background: #e05263; }
+
+    .step .icon {
+      font-size: clamp(42px, 6vw, 90px);
+      line-height: 1;
+    }
+
+    .photo-timeline .step {
+      min-height: clamp(200px, 20vw, 300px);
+      padding: clamp(7px, 0.9vw, 12px);
+      align-content: stretch;
+      gap: clamp(6px, 0.8vw, 10px);
+      background: rgba(255, 255, 255, 0.9);
+      color: var(--ink);
+      border: 2px solid rgba(30, 41, 59, 0.12);
+      overflow: hidden;
+    }
+
+    .five-steps .step {
+      min-height: clamp(200px, 19vw, 284px);
+    }
+
+    .photo-timeline .step img {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+      border-radius: 6px;
+      background: white;
+    }
+
+    .photo-timeline .step-title {
+      font-size: clamp(15px, 1.65vw, 24px);
+      line-height: 1.05;
+      font-weight: 950;
+    }
+
+    .photo-timeline .person {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.28em;
+      color: var(--muted);
+      font-size: clamp(13px, 1.25vw, 18px);
+      line-height: 1.02;
+      font-weight: 950;
+    }
+
+    .photo-timeline .person-icon {
+      font-size: 1.38em;
+      line-height: 1;
+    }
+
+    .future-mark {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      display: grid;
+      place-items: center;
+      border-radius: 6px;
+      background:
+        radial-gradient(circle at 50% 38%, rgba(255, 212, 71, 0.48), transparent 34%),
+        linear-gradient(180deg, #dff5ff, #fff9ef);
+      color: var(--blue);
+      font-size: clamp(76px, 8vw, 128px);
+      line-height: 1;
+      font-weight: 950;
+    }
+
+    .photo-timeline .era {
+      width: fit-content;
+      justify-self: center;
+      padding: 0.22em 0.55em;
+      border-radius: 999px;
+      background: #fff1a6;
+      color: #1e293b;
+      font-size: clamp(14px, 1.5vw, 22px);
+      line-height: 1;
+      font-weight: 950;
+    }
+
+    .parts {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: clamp(10px, 1.7vw, 22px);
+      max-width: min(940px, 58vw);
+    }
+
+    .part {
+      display: flex;
+      align-items: center;
+      gap: 0.55em;
+      min-height: clamp(76px, 8vw, 124px);
+      padding: clamp(10px, 1.4vw, 18px);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.84);
+      border: 2px solid var(--line);
+      font-size: clamp(16px, 1.8vw, 28px);
+      line-height: 1.08;
+      font-weight: 900;
+    }
+
+    .part .icon {
+      width: 2.4em;
+      height: 2.4em;
+      flex: none;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: #fff1a6;
+      font-size: 1.32em;
+    }
+
+    .detail-parts .part {
+      align-items: flex-start;
+    }
+
+    .detail-parts strong,
+    .detail-parts small {
+      display: block;
+    }
+
+    .detail-parts small {
+      margin-top: 0.25em;
+      color: var(--muted);
+      font-size: 0.72em;
+      line-height: 1.12;
+      font-weight: 850;
+    }
+
+    .inside-focus {
+      align-content: start;
+      gap: clamp(6px, 1vh, 12px);
+      padding-top: clamp(16px, 2.2vw, 34px);
+    }
+
+    .inside-focus h2 {
+      max-width: none;
+      font-size: clamp(34px, 3.8vw, 52px);
+    }
+
+    .inside-map {
+      position: relative;
+      width: min(100%, 930px);
+      justify-self: center;
+      margin-top: clamp(4px, 1vh, 10px);
+      border: 8px solid rgba(255, 255, 255, 0.9);
+      border-radius: 8px;
+      background: white;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .inside-map img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: contain;
+      background: white;
+    }
+
+    .inside-arrows {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    .inside-arrows line {
+      stroke-width: 0.42;
+      stroke-linecap: round;
+    }
+
+    .inside-arrows circle {
+      stroke: white;
+      stroke-width: 0.85;
+    }
+
+    .callout {
+      position: absolute;
+      z-index: 2;
+      min-width: clamp(138px, 14vw, 210px);
+      max-width: 230px;
+      padding: 0.55em 0.7em;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.94);
+      border: 3px solid currentColor;
+      color: #1e293b;
+      box-shadow: 0 10px 22px rgba(30, 41, 59, 0.18);
+      font-size: clamp(14px, 1.55vw, 22px);
+      font-weight: 950;
+      line-height: 1.08;
+    }
+
+    .callout .label-row {
+      display: flex;
+      align-items: center;
+      gap: 0.38em;
+    }
+
+    .callout .label-icon {
+      flex: none;
+      font-size: 1.24em;
+      line-height: 1;
+    }
+
+    .callout small {
+      display: block;
+      margin-top: 0.15em;
+      color: var(--muted);
+      font-size: 0.78em;
+      font-weight: 850;
+    }
+
+    .cpu-callout {
+      left: 10%;
+      top: 12%;
+      color: #2364aa;
+    }
+
+    .memory-callout {
+      right: 10%;
+      top: 10%;
+      color: #2f9e66;
+    }
+
+    .gpu-callout {
+      left: 9%;
+      bottom: 15%;
+      color: #e05263;
+    }
+
+    .drive-callout {
+      right: 6%;
+      bottom: 23%;
+      color: #8b5e34;
+    }
+
+    .quiz {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: clamp(12px, 2vw, 24px);
+      width: min(100%, 920px);
+      margin-top: clamp(6px, 1vh, 14px);
+    }
+
+    .answer {
+      min-height: clamp(88px, 10vw, 148px);
+      border: 3px solid rgba(30, 41, 59, 0.16);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.88);
+      color: var(--ink);
+      cursor: pointer;
+      box-shadow: 0 12px 26px rgba(30, 41, 59, 0.12);
+      font-size: clamp(22px, 3vw, 46px);
+      font-weight: 950;
+      transition: transform 140ms ease, border-color 140ms ease, background 140ms ease;
+    }
+
+    .answer span {
+      display: block;
+      margin-bottom: 0.12em;
+      font-size: clamp(34px, 5vw, 72px);
+      line-height: 1;
+    }
+
+    .desk-icon {
+      width: clamp(54px, 5.2vw, 82px);
+      height: clamp(42px, 4.2vw, 62px);
+      position: relative;
+      margin-inline: auto;
+      font-size: 0;
+    }
+
+    .desk-icon::before {
+      content: "";
+      position: absolute;
+      left: 4%;
+      right: 4%;
+      top: 16%;
+      height: 18%;
+      border-radius: 4px;
+      background: #9b6a3a;
+      box-shadow: 0 3px 0 #6f4724;
+    }
+
+    .desk-icon::after {
+      content: "";
+      position: absolute;
+      left: 14%;
+      right: 14%;
+      bottom: 8%;
+      height: 54%;
+      border-left: 9px solid #9b6a3a;
+      border-right: 9px solid #9b6a3a;
+    }
+
+    .image-answer {
+      display: grid;
+      grid-template-rows: minmax(0, 1fr) auto;
+      align-items: center;
+      justify-items: center;
+      gap: clamp(6px, 0.8vw, 10px);
+      padding: clamp(8px, 1vw, 14px);
+      font-size: clamp(18px, 2.15vw, 32px);
+    }
+
+    .image-answer img {
+      width: 100%;
+      max-height: clamp(72px, 9vw, 124px);
+      object-fit: cover;
+      border-radius: 6px;
+      background: white;
+    }
+
+    .missing-layout {
+      grid-template-columns: minmax(260px, 0.48fr) minmax(58%, 1.52fr);
+    }
+
+    .small-quiz {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      width: min(100%, 620px);
+    }
+
+    .small-quiz .answer {
+      min-height: clamp(68px, 7vw, 104px);
+      font-size: clamp(18px, 2.15vw, 32px);
+    }
+
+    .missing-photo {
+      width: min(62vw, 860px);
+      justify-self: end;
+      border: 8px solid rgba(255, 255, 255, 0.9);
+      border-radius: 8px;
+      background: white;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      transform: rotate(1deg);
+    }
+
+    .missing-photo img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: contain;
+      background: white;
+    }
+
+    .big-question {
+      width: min(24vw, 260px);
+      aspect-ratio: 1;
+      display: grid;
+      place-items: center;
+      margin-top: clamp(10px, 2vw, 26px);
+      border-radius: 50%;
+      background: #fff1a6;
+      color: var(--blue);
+      border: 5px solid rgba(30, 41, 59, 0.12);
+      box-shadow: var(--shadow);
+      font-size: clamp(84px, 13vw, 190px);
+      font-weight: 950;
+      line-height: 1;
+    }
+
+    .answer:hover,
+    .answer:focus-visible {
+      border-color: var(--blue);
+      transform: translateY(-2px);
+      outline: none;
+    }
+
+    .answer.correct.revealed {
+      background: #d8f8d8;
+      border-color: #36a852;
+    }
+
+    .answer.wrong.revealed {
+      background: #ffe1e1;
+      border-color: #ff6b6b;
+    }
+
+    .feedback {
+      min-height: 1.35em;
+      color: var(--ink);
+      font-size: clamp(19px, 2.35vw, 34px);
+      font-weight: 950;
+    }
+
+    .controls {
+      position: absolute;
+      z-index: 5;
+      right: clamp(10px, 1.6vw, 24px);
+      bottom: clamp(10px, 1.6vw, 22px);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-button,
+    .notes-toggle {
+      width: clamp(40px, 4.2vw, 58px);
+      height: clamp(40px, 4.2vw, 58px);
+      border: 0;
+      border-radius: 999px;
+      color: white;
+      background: rgba(30, 41, 59, 0.92);
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      font-size: clamp(18px, 2.1vw, 28px);
+      font-weight: 950;
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.22);
+    }
+
+    .progress {
+      min-width: clamp(64px, 6vw, 90px);
+      padding: 0.48em 0.7em;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.88);
+      color: var(--ink);
+      text-align: center;
+      font-size: clamp(14px, 1.6vw, 22px);
+      font-weight: 950;
+      border: 1px solid rgba(30, 41, 59, 0.12);
+    }
+
+    .notes {
+      position: absolute;
+      z-index: 4;
+      left: clamp(12px, 2vw, 28px);
+      right: clamp(12px, 2vw, 28px);
+      bottom: clamp(70px, 7vw, 100px);
+      display: none;
+      padding: clamp(12px, 1.6vw, 20px);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.94);
+      border: 2px solid rgba(30, 41, 59, 0.14);
+      box-shadow: var(--shadow);
+      color: var(--ink);
+      font-size: clamp(16px, 1.55vw, 24px);
+      line-height: 1.28;
+      font-weight: 750;
+    }
+
+    .notes.visible {
+      display: block;
+    }
+
+    .notes strong {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--blue);
+    }
+
+    .machine {
+      width: min(36vw, 430px);
+      aspect-ratio: 0.9;
+      justify-self: end;
+      display: grid;
+      grid-template-rows: 1fr 0.46fr;
+      gap: clamp(8px, 1.3vw, 18px);
+    }
+
+    .monitor,
+    .tower {
+      border-radius: 8px;
+      border: 7px solid #394a59;
+      background: #7bdff2;
+      box-shadow: var(--shadow);
+      position: relative;
+    }
+
+    .monitor::before {
+      content: "☺";
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      color: #1e293b;
+      font-size: clamp(70px, 11vw, 150px);
+      font-weight: 900;
+    }
+
+    .tower {
+      width: 44%;
+      justify-self: center;
+      background: #f7d794;
+    }
+
+    .tower::before,
+    .tower::after {
+      content: "";
+      position: absolute;
+      left: 22%;
+      right: 22%;
+      height: 9%;
+      border-radius: 999px;
+      background: #394a59;
+    }
+
+    .tower::before { top: 24%; }
+    .tower::after { top: 44%; }
+
+    @media (max-width: 720px), (max-aspect-ratio: 1/1) {
+      .deck {
+        width: 100vw;
+        height: 100vh;
+      }
+
+      .slide,
+      .hero-slide,
+      .split {
+        grid-template-columns: 1fr;
+        align-content: start;
+        padding: 20px;
+        gap: 14px;
+      }
+
+      h1 {
+        max-width: 11ch;
+        width: 100%;
+        font-size: clamp(31px, 9.3vw, 38px);
+      }
+
+      h2 {
+        max-width: none;
+        width: 100%;
+        font-size: clamp(29px, 9vw, 40px);
+      }
+
+      p {
+        max-width: none;
+        width: 100%;
+        overflow-wrap: break-word;
+        font-size: clamp(16px, 4.6vw, 20px);
+      }
+
+      .kicker {
+        font-size: 14px;
+      }
+
+      .hero-image,
+      .big-emoji,
+      .machine {
+        justify-self: center;
+        width: min(82vw, 420px);
+      }
+
+      .tiles,
+      .parts {
+        max-width: none;
+      }
+
+      .tiles,
+      .timeline,
+      .quiz,
+      .parts {
+        grid-template-columns: 1fr;
+      }
+
+      .tile,
+      .step,
+      .answer,
+      .part {
+        min-height: 72px;
+      }
+
+      .controls {
+        left: 10px;
+        right: auto;
+        justify-content: flex-start;
+        gap: 6px;
+      }
+
+      .nav-button,
+      .notes-toggle {
+        width: 38px;
+        height: 38px;
+        font-size: 18px;
+      }
+
+      .progress {
+        min-width: 58px;
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="deck" aria-label="Presentation: The Little History of Computers">
+    <section class="slides">
+      <article class="slide hero-slide active" data-notes="Time: 3 min. Ask the children where they have seen a computer before: at home, at school, on a parent's phone, at a shop checkout. Explain that we are going to travel from very big machines to very small ones.">
+        <div>
+          <div class="kicker">Time travel</div>
+          <h1>The little history of computers</h1>
+        </div>
+        <img class="hero-image" src="assets/computer-timeline.png" alt="Illustrated timeline with several generations of smiling computers">
+      </article>
+
+      <article class="slide split" data-notes="Time: 3 min. Make each idea concrete: count apples or children, remember a photo or a drawing, show a cartoon or a picture, send a short message. Explain that a computer follows instructions, like a very careful recipe.">
+        <div>
+          <div class="kicker">What is it for?</div>
+          <h2>A computer helps us do things</h2>
+          <p>It can help with real things we know from home and school.</p>
+        </div>
+        <div class="tiles" aria-label="What a computer can do">
+          <div class="tile"><span>🍎</span>Count apples</div>
+          <div class="tile"><span>📸</span>Remember photos</div>
+          <div class="tile"><span>🖼️</span>Show pictures</div>
+          <div class="tile"><span>💬</span>Send messages</div>
+        </div>
+      </article>
+
+      <article class="slide split quiz-slide" data-notes="Time: 3 min. Let them vote with their hands before clicking. Emphasize that before computers, people had already invented tools to help them count.">
+        <div>
+          <div class="kicker">Before</div>
+          <h2>People already had tools for counting</h2>
+          <p>Fingers, counting frames, then machines with wheels and buttons.</p>
+          <div class="feedback" aria-live="polite"></div>
+        </div>
+        <div class="quiz" data-success="Yes! Those three can help us count.">
+          <button class="answer correct"><span>✋</span>Fingers</button>
+          <button class="answer correct"><span>🧮</span>Counting frame</button>
+          <button class="answer correct"><span>⚙️</span>Machine</button>
+          <button class="answer wrong"><span>🍌</span>Banana</button>
+        </div>
+      </article>
+
+      <article class="slide split" data-notes="Time: 3 min. Show the ENIAC photo and point out the person next to the machine to show the scale. Say that many adults were needed to make it work, and that it mostly did calculations. Photo: ENIAC, U.S. Army Photo, public domain via Wikimedia Commons.">
+        <div>
+          <div class="kicker">Long ago</div>
+          <h2>The first computers were very big</h2>
+          <p>Some took up almost a whole room. They had lots of lights, wires and buttons.</p>
+        </div>
+        <figure class="history-photo">
+          <img src="assets/eniac-room.jpg" alt="The ENIAC computer filling a large room in 1946">
+          <figcaption>ENIAC, 1946: a computer as big as a room.</figcaption>
+        </figure>
+      </article>
+
+      <article class="slide split quiz-slide" data-notes="Time: 3 min. Use this as a simple restart question. After the answer, show the computer tower you brought and say: today it is much smaller.">
+        <div>
+          <div class="kicker">Quiz</div>
+          <h2>An old computer could be...</h2>
+          <p>How big do you think it could be?</p>
+          <div class="feedback" aria-live="polite"></div>
+        </div>
+        <div class="quiz" data-success="Well done! Sometimes it was as big as a room.">
+          <button class="answer wrong"><span>🧽</span>Like an eraser</button>
+          <button class="answer correct"><span>🏠</span>Like a room</button>
+          <button class="answer wrong"><span>🧦</span>Like a sock</button>
+          <button class="answer wrong"><span>🍬</span>Like a sweet</button>
+        </div>
+      </article>
+
+      <article class="slide split photo-focus" data-notes="Time: 4 min. Show the real computer tower. Ask them to name the screen, keyboard, mouse and tower, then explain that the tower is the box that does the work. Photo selected from the user's provided product image URL.">
+        <div>
+          <div class="kicker">At home</div>
+          <h2>Then computers came to the desk</h2>
+        </div>
+        <figure class="desktop-photo">
+          <img src="assets/desktop-computer.jpg" alt="A real desk computer with screens, keyboard and mouse">
+          <figcaption>A full desk computer: screen, keyboard, mouse and tower.</figcaption>
+        </figure>
+      </article>
+
+      <article class="slide inside-focus" data-notes="Time: 6 min. Point to the real tower, then use this picture. Processor: the brain that follows instructions. Memory: the small table for today's work. Graphics card: the artist that helps make pictures and games. Hard drive: the cupboard where files sleep when the computer is off. The image was generated for this presentation; labels and arrows are HTML overlays.">
+        <div>
+          <div class="kicker">Inside the tower</div>
+          <h2>Each part has a job</h2>
+        </div>
+        <figure class="inside-map" aria-label="Inside of a computer tower with labelled parts">
+          <img src="assets/inside-pc.png" alt="Inside of a desktop computer tower">
+          <svg class="inside-arrows" viewBox="0 0 100 56.25" preserveAspectRatio="none" aria-hidden="true">
+            <line x1="29" y1="17" x2="37" y2="28" stroke="#2364aa"></line>
+            <circle cx="37" cy="28" r="1.1" fill="#2364aa"></circle>
+            <line x1="70" y1="17" x2="49" y2="27" stroke="#2f9e66"></line>
+            <circle cx="49" cy="27" r="1.1" fill="#2f9e66"></circle>
+            <line x1="29" y1="42" x2="39" y2="42" stroke="#e05263"></line>
+            <circle cx="39" cy="42" r="1.1" fill="#e05263"></circle>
+            <line x1="72" y1="34" x2="75" y2="48" stroke="#8b5e34"></line>
+            <circle cx="75" cy="48" r="1.1" fill="#8b5e34"></circle>
+          </svg>
+          <figcaption class="callout cpu-callout">Processor <small><span class="label-row"><span class="label-icon">🧠</span>The brain</span></small></figcaption>
+          <figcaption class="callout memory-callout">Memory <small><span class="label-row"><span class="label-icon">🖍️</span>Today's work</span></small></figcaption>
+          <figcaption class="callout gpu-callout">Graphics card <small><span class="label-row"><span class="label-icon">🎨</span>Pictures & games</span></small></figcaption>
+          <figcaption class="callout drive-callout">Hard drive <small><span class="label-row"><span class="label-icon">🖼️</span>Keeps files</span></small></figcaption>
+        </figure>
+      </article>
+
+      <article class="slide split quiz-slide" data-notes="Time: 3 min. Let them listen: a fan blows air. Explain that a computer gets warm when it works, like we do when we run.">
+        <div>
+          <div class="kicker">Quiz</div>
+          <h2>Why is there a fan?</h2>
+          <p>The fan moves air inside the box.</p>
+          <div class="feedback" aria-live="polite"></div>
+        </div>
+        <div class="quiz" data-success="Yes! It helps the parts stay cool.">
+          <button class="answer wrong">To sing</button>
+          <button class="answer correct">To cool it</button>
+          <button class="answer wrong">To draw</button>
+          <button class="answer wrong">To sleep</button>
+        </div>
+      </article>
+
+      <article class="slide" data-notes="Time: 3 min. Show the timeline with your hands: big, medium, small. Use the decades as rough landmarks: 60s for room computers, 80s for desktop PCs, 90s for laptops, 2000s for computers in the hand, and 2030s for what the children may use when they are older. The colorful laptop image is a friendly late-90s style example.">
+        <div class="kicker">Today</div>
+        <h2>Computers became smaller</h2>
+        <div class="timeline photo-timeline five-steps" aria-label="Computer timeline">
+          <div class="step">
+            <img src="assets/timeline-mainframe.jpg" alt="A large computer room with operators">
+            <div class="step-title">Very big</div>
+            <div class="era">60s</div>
+            <div class="person" aria-label="baby"><span class="person-icon">👶</span></div>
+          </div>
+          <div class="step">
+            <img src="assets/timeline-desktop.jpg" alt="An IBM PC desktop computer">
+            <div class="step-title">On a desk</div>
+            <div class="era">80s</div>
+            <div class="person" aria-label="teen girl"><span class="person-icon">👧</span></div>
+          </div>
+          <div class="step">
+            <img src="assets/timeline-laptop.jpg" alt="A 1990s laptop computer">
+            <div class="step-title">In a bag</div>
+            <div class="era">90s</div>
+            <div class="person" aria-label="young woman"><span class="person-icon">👩</span></div>
+          </div>
+          <div class="step">
+            <img src="assets/timeline-hand.jpg" alt="A first generation smartphone">
+            <div class="step-title">In a hand</div>
+            <div class="era">2000s</div>
+            <div class="person" aria-label="older woman with short hair"><span class="person-icon">👩‍🦱</span></div>
+          </div>
+          <div class="step">
+            <div class="future-mark" aria-label="Question mark for the future">?</div>
+            <div class="step-title">What next?</div>
+            <div class="era">2030s</div>
+            <div class="person" aria-label="woman with white hair"><span class="person-icon">👩‍🦳</span></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="slide split missing-layout" data-notes="Time: 3 min. Final quiz 1. Show the picture: it has a tower, keyboard and mouse, but the screen is missing. Do not rely on reading: ask them to say the missing part out loud or point to a screen in the room. Expected answer: screen.">
+        <div>
+          <div class="kicker">Final quiz</div>
+          <h2>What is missing?</h2>
+          <div class="big-question" aria-hidden="true">?</div>
+        </div>
+        <figure class="missing-photo">
+          <img src="assets/missing-screen.png" alt="A desktop computer with tower, keyboard and mouse but no screen">
+        </figure>
+      </article>
+
+      <article class="slide split quiz-slide" data-notes="Time: 3 min. Final quiz 2. Ask which picture shows the oldest computer. Let them compare the images from the timeline and vote with their hands before clicking.">
+        <div>
+          <div class="kicker">Final quiz</div>
+          <h2>Which one is the oldest?</h2>
+          <p>Look at the pictures. Which computer came first?</p>
+          <div class="feedback" aria-live="polite"></div>
+        </div>
+        <div class="quiz" data-success="Correct! The room computer is the oldest one here.">
+          <button class="answer image-answer correct"><img src="assets/timeline-mainframe.jpg" alt="Large computer room">Very big</button>
+          <button class="answer image-answer wrong"><img src="assets/timeline-desktop.jpg" alt="Desktop computer">On a desk</button>
+          <button class="answer image-answer wrong"><img src="assets/timeline-laptop.jpg" alt="Colorful laptop">In a bag</button>
+          <button class="answer image-answer wrong"><img src="assets/timeline-hand.jpg" alt="Phone in hand">In a hand</button>
+        </div>
+      </article>
+
+      <article class="slide split quiz-slide" data-notes="Time: 3 min. Final quiz 3. This one has several good answers. Let them choose one, then explain that computers can be very big, on a desk, in a bag, or in a hand.">
+        <div>
+          <div class="kicker">Final quiz</div>
+          <h2>Where can a computer be?</h2>
+          <p>Choose one place. There are many good answers.</p>
+          <div class="feedback" aria-live="polite"></div>
+        </div>
+        <div class="quiz" data-success="Yes! Computers can be in many places.">
+          <button class="answer correct"><span>🏢</span>In a room</button>
+          <button class="answer correct"><span class="desk-icon" aria-hidden="true"></span>On a desk</button>
+          <button class="answer correct"><span>🎒</span>In a bag</button>
+          <button class="answer correct"><span>✋</span>In a hand</button>
+        </div>
+      </article>
+    </section>
+
+    <aside class="notes" aria-live="polite"></aside>
+
+    <nav class="controls" aria-label="Slide navigation">
+      <button class="notes-toggle" type="button" title="Notes">i</button>
+      <button class="nav-button prev" type="button" title="Previous slide">‹</button>
+      <div class="progress" aria-live="polite">1 / 10</div>
+      <button class="nav-button next" type="button" title="Next slide">›</button>
+    </nav>
+  </main>
+
+  <script>
+    const slides = Array.from(document.querySelectorAll(".slide"));
+    const progress = document.querySelector(".progress");
+    const notes = document.querySelector(".notes");
+    const notesToggle = document.querySelector(".notes-toggle");
+    let current = 0;
+
+    function showSlide(index) {
+      current = Math.max(0, Math.min(slides.length - 1, index));
+      slides.forEach((slide, slideIndex) => {
+        slide.classList.toggle("active", slideIndex === current);
+      });
+      progress.textContent = `${current + 1} / ${slides.length}`;
+      notes.innerHTML = `<strong>Speaker notes</strong>${slides[current].dataset.notes || ""}`;
+      document.querySelectorAll(".answer.revealed").forEach((button) => {
+        button.classList.remove("revealed");
+      });
+      document.querySelectorAll(".feedback").forEach((box) => {
+        box.textContent = "";
+      });
+    }
+
+    window.deckControls = { showSlide };
+
+    document.querySelector(".prev").addEventListener("click", () => showSlide(current - 1));
+    document.querySelector(".next").addEventListener("click", () => showSlide(current + 1));
+
+    notesToggle.addEventListener("click", () => {
+      notes.classList.toggle("visible");
+      notesToggle.setAttribute("aria-pressed", String(notes.classList.contains("visible")));
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "ArrowRight" || event.key === " ") {
+        event.preventDefault();
+        showSlide(current + 1);
+      }
+      if (event.key === "ArrowLeft") {
+        event.preventDefault();
+        showSlide(current - 1);
+      }
+      if (event.key.toLowerCase() === "i") {
+        notesToggle.click();
+      }
+    });
+
+    document.querySelectorAll(".quiz").forEach((quiz) => {
+      quiz.addEventListener("click", (event) => {
+        const button = event.target.closest(".answer");
+        if (!button) return;
+
+        quiz.querySelectorAll(".answer").forEach((answer) => {
+          answer.classList.add("revealed");
+        });
+
+        const feedback = quiz.closest(".slide").querySelector(".feedback");
+        feedback.textContent = button.classList.contains("correct")
+          ? quiz.dataset.success
+          : "Almost! Let's look at the right answer together.";
+      });
+    });
+
+    const params = new URLSearchParams(window.location.search);
+    const initialSlide = Number.parseInt(params.get("slide") || "1", 10);
+    showSlide(Number.isFinite(initialSlide) ? initialSlide - 1 : 0);
+  </script>
+</body>
+</html>
