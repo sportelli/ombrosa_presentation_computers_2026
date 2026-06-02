@@ -380,6 +380,55 @@
       font-weight: 950;
     }
 
+    .formula-slide {
+      align-content: center;
+      justify-items: center;
+      text-align: center;
+      gap: clamp(16px, 3vh, 32px);
+    }
+
+    .formula {
+      display: grid;
+      grid-template-columns: minmax(120px, 1fr) auto minmax(120px, 1fr) auto minmax(120px, 1fr);
+      align-items: center;
+      gap: clamp(10px, 2vw, 26px);
+      width: min(100%, 1140px);
+    }
+
+    .formula-card {
+      min-height: clamp(160px, 22vw, 260px);
+      display: grid;
+      place-items: center;
+      gap: clamp(6px, 1vw, 12px);
+      padding: clamp(10px, 1.5vw, 20px);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.9);
+      border: 3px solid rgba(30, 41, 59, 0.14);
+      box-shadow: var(--shadow);
+      color: var(--ink);
+      font-size: clamp(20px, 2.2vw, 34px);
+      font-weight: 950;
+      line-height: 1.05;
+    }
+
+    .formula-icon {
+      font-size: clamp(76px, 9vw, 132px);
+      line-height: 1;
+    }
+
+    .formula-card img {
+      width: min(100%, 180px);
+      aspect-ratio: 1;
+      object-fit: contain;
+    }
+
+    .operator {
+      color: var(--blue);
+      font-size: clamp(56px, 6vw, 96px);
+      font-weight: 950;
+      line-height: 1;
+    }
+
     .photo-timeline .era {
       width: fit-content;
       justify-self: center;
@@ -1093,6 +1142,27 @@
           <button class="answer correct"><span class="desk-icon" aria-hidden="true"></span>On a desk</button>
           <button class="answer correct"><span>🎒</span>In a bag</button>
           <button class="answer correct"><span>✋</span>In a hand</button>
+        </div>
+      </article>
+
+      <article class="slide formula-slide" data-notes="Time: 2 min. Closing idea. Say: when children learn how computers work, they can invent amazing things, even robots. Let them say the formula with you: child plus computer equals robot.">
+        <div class="kicker">The end</div>
+        <h2>What can we make?</h2>
+        <div class="formula" aria-label="Child plus computer equals robot">
+          <div class="formula-card">
+            <div class="formula-icon" aria-hidden="true">🧒</div>
+            <div>Child</div>
+          </div>
+          <div class="operator" aria-hidden="true">+</div>
+          <div class="formula-card">
+            <div class="formula-icon" aria-hidden="true">💻</div>
+            <div>Computer</div>
+          </div>
+          <div class="operator" aria-hidden="true">=</div>
+          <div class="formula-card">
+            <img src="assets/robot-boy.png" alt="A friendly robot boy">
+            <div>Robot</div>
+          </div>
         </div>
       </article>
     </section>
