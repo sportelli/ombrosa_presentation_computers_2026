@@ -1114,7 +1114,13 @@
     const notesToggle = document.querySelector(".notes-toggle");
     let current = 0;
 
-    function showSlide(index) {
+    function setSlideUrl(index) {
+      const url = new URL(window.location.href);
+      url.searchParams.set("slide", String(index + 1));
+      window.history.pushState({ slide: index + 1 }, "", url);
+    }
+
+    function showSlide(index, options = {}) {
       current = Math.max(0, Math.min(slides.length - 1, index));
       slides.forEach((slide, slideIndex) => {
         slide.classList.toggle("active", slideIndex === current);
@@ -1127,12 +1133,22 @@
       document.querySelectorAll(".feedback").forEach((box) => {
         box.textContent = "";
       });
+
+      if (!options.skipUrl) {
+        setSlideUrl(current);
+      }
     }
 
     window.deckControls = { showSlide };
 
     document.querySelector(".prev").addEventListener("click", () => showSlide(current - 1));
     document.querySelector(".next").addEventListener("click", () => showSlide(current + 1));
+
+    window.addEventListener("popstate", () => {
+      const params = new URLSearchParams(window.location.search);
+      const slide = Number.parseInt(params.get("slide") || "1", 10);
+      showSlide(Number.isFinite(slide) ? slide - 1 : 0, { skipUrl: true });
+    });
 
     notesToggle.addEventListener("click", () => {
       notes.classList.toggle("visible");
@@ -1171,7 +1187,7 @@
 
     const params = new URLSearchParams(window.location.search);
     const initialSlide = Number.parseInt(params.get("slide") || "1", 10);
-    showSlide(Number.isFinite(initialSlide) ? initialSlide - 1 : 0);
+    showSlide(Number.isFinite(initialSlide) ? initialSlide - 1 : 0, { skipUrl: true });
   </script>
 </body>
 </html>
