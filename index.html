@@ -291,8 +291,20 @@
 
     .timeline.five-steps {
       grid-template-columns: repeat(5, minmax(0, 1fr));
-      width: min(100%, 1260px);
+      width: min(100%, 1360px);
       gap: clamp(6px, 0.75vw, 10px);
+    }
+
+    .timeline-slide {
+      align-content: center;
+      gap: clamp(12px, 2vh, 22px);
+      padding-inline: clamp(22px, 3vw, 46px);
+    }
+
+    .timeline-slide h2 {
+      max-width: none;
+      white-space: nowrap;
+      font-size: clamp(42px, 4.9vw, 74px);
     }
 
     .step {
@@ -321,10 +333,10 @@
     }
 
     .photo-timeline .step {
-      min-height: clamp(210px, 21vw, 320px);
-      padding: clamp(6px, 0.65vw, 9px);
+      min-height: clamp(230px, 23vw, 350px);
+      padding: clamp(5px, 0.55vw, 8px);
       align-content: stretch;
-      gap: clamp(4px, 0.55vw, 7px);
+      gap: clamp(3px, 0.45vw, 6px);
       background: rgba(255, 255, 255, 0.9);
       color: var(--ink);
       border: 2px solid rgba(30, 41, 59, 0.12);
@@ -332,19 +344,19 @@
     }
 
     .five-steps .step {
-      min-height: clamp(210px, 20vw, 310px);
+      min-height: clamp(230px, 22vw, 340px);
     }
 
     .photo-timeline .step img {
       width: 100%;
-      aspect-ratio: 1.12 / 1;
+      aspect-ratio: 1.32 / 1;
       object-fit: cover;
       border-radius: 6px;
       background: white;
     }
 
     .photo-timeline .step-title {
-      font-size: clamp(13px, 1.38vw, 20px);
+      font-size: clamp(12px, 1.18vw, 18px);
       line-height: 1.05;
       font-weight: 950;
       white-space: nowrap;
@@ -356,7 +368,7 @@
       justify-content: center;
       gap: 0.28em;
       color: var(--muted);
-      font-size: clamp(12px, 1.05vw, 16px);
+      font-size: clamp(11px, 0.9vw, 14px);
       line-height: 1.02;
       font-weight: 950;
     }
@@ -368,7 +380,7 @@
 
     .future-mark {
       width: 100%;
-      aspect-ratio: 1.12 / 1;
+      aspect-ratio: 1.32 / 1;
       display: grid;
       place-items: center;
       border-radius: 6px;
@@ -1076,7 +1088,7 @@
         </div>
       </article>
 
-      <article class="slide" data-notes="Time: 3 min. Show the timeline with your hands: big, medium, small. Use the decades as rough landmarks: 60s for room computers, 80s for desktop PCs, 90s for laptops, 2000s for computers in the hand, and 2030s for what the children may use when they are older. The colorful laptop image is a friendly late-90s style example.">
+      <article class="slide timeline-slide" data-notes="Time: 3 min. Show the timeline with your hands: big, medium, small. Use the decades as rough landmarks: 60s for room computers, 80s for desktop PCs, 90s for laptops, 2000s for computers in the hand, and 2030s for what the children may use when they are older. The colorful laptop image is a friendly late-90s style example.">
         <div class="kicker">Today</div>
         <h2>Computers became smaller</h2>
         <div class="timeline photo-timeline five-steps" aria-label="Computer timeline">
