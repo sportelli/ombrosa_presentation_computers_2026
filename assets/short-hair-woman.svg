@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Woman with short brown hair">
+  <circle cx="64" cy="64" r="58" fill="#fff3d6"/>
+  <path d="M31 59c0-25 18-41 41-41 19 0 33 14 33 33 0 22-13 38-34 38H50C38 89 31 78 31 59z" fill="#5b351f"/>
+  <path d="M37 62c0-21 15-35 35-35 17 0 29 12 29 29v15c0 19-14 34-32 34H57c-18 0-32-15-32-34v-1c0-5 3-8 7-8h5z" fill="#f2c49b"/>
+  <path d="M33 61c4-23 21-39 42-39 19 0 32 13 32 33 0 6-1 12-4 18-4-24-18-35-41-35-13 0-24 5-29 23z" fill="#4a2a18"/>
+  <path d="M33 61c13-2 27-10 38-24 5 10 18 17 33 18-3-18-17-31-34-31-20 0-35 13-37 37z" fill="#5b351f"/>
+  <circle cx="49" cy="68" r="4" fill="#1f2937"/>
+  <circle cx="79" cy="68" r="4" fill="#1f2937"/>
+  <path d="M52 88c8 7 20 7 28 0" fill="none" stroke="#7a3d35" stroke-width="6" stroke-linecap="round"/>
+</svg>
