@@ -378,6 +378,82 @@
       line-height: 1;
     }
 
+    .age-avatar {
+      --hair: #5b351f;
+      --skin: #f2c49b;
+      width: 1.45em;
+      height: 1.45em;
+      position: relative;
+      display: inline-block;
+      border-radius: 50%;
+      background: var(--skin);
+      box-shadow: inset 0 -0.06em 0 rgba(30, 41, 59, 0.12);
+    }
+
+    .age-avatar::before {
+      content: "";
+      position: absolute;
+      left: 10%;
+      right: 10%;
+      top: -2%;
+      height: 46%;
+      border-radius: 50% 50% 30% 30%;
+      background: var(--hair);
+    }
+
+    .age-avatar::after {
+      content: "";
+      position: absolute;
+      left: 31%;
+      right: 31%;
+      top: 55%;
+      height: 0.16em;
+      border-radius: 999px;
+      background: #7a3d35;
+      box-shadow:
+        -0.28em -0.27em 0 -0.05em #1e293b,
+        0.28em -0.27em 0 -0.05em #1e293b;
+    }
+
+    .age-baby {
+      --hair: #5b351f;
+      width: 1.28em;
+      height: 1.28em;
+    }
+
+    .age-baby::before {
+      left: 38%;
+      right: 38%;
+      top: -8%;
+      height: 28%;
+      border-radius: 50%;
+    }
+
+    .age-teen::before {
+      left: 6%;
+      right: 6%;
+      height: 54%;
+      border-radius: 48% 48% 38% 38%;
+    }
+
+    .age-adult::before {
+      left: 5%;
+      right: 5%;
+      height: 58%;
+      border-radius: 48% 48% 42% 42%;
+    }
+
+    .age-short::before {
+      left: 8%;
+      right: 8%;
+      height: 48%;
+      border-radius: 55% 55% 24% 24%;
+    }
+
+    .age-white {
+      --hair: #f1f5f9;
+    }
+
     .future-mark {
       width: 100%;
       aspect-ratio: 1.32 / 1;
@@ -1096,31 +1172,31 @@
             <img src="assets/timeline-mainframe.jpg" alt="A large computer room with operators">
             <div class="step-title">Very big</div>
             <div class="era">60s</div>
-            <div class="person" aria-label="baby"><span class="person-icon">👶</span></div>
+            <div class="person" aria-label="baby"><span class="age-avatar age-baby" aria-hidden="true"></span></div>
           </div>
           <div class="step">
             <img src="assets/timeline-desktop.jpg" alt="An IBM PC desktop computer">
             <div class="step-title">On a desk</div>
             <div class="era">80s</div>
-            <div class="person" aria-label="teen girl"><span class="person-icon">👧</span></div>
+            <div class="person" aria-label="teen girl with brown hair"><span class="age-avatar age-teen" aria-hidden="true"></span></div>
           </div>
           <div class="step">
             <img src="assets/timeline-laptop.jpg" alt="A 1990s laptop computer">
             <div class="step-title">In a bag</div>
             <div class="era">90s</div>
-            <div class="person" aria-label="young woman"><span class="person-icon">👩</span></div>
+            <div class="person" aria-label="young woman with brown hair"><span class="age-avatar age-adult" aria-hidden="true"></span></div>
           </div>
           <div class="step">
             <img src="assets/timeline-hand.jpg" alt="A first generation smartphone">
             <div class="step-title">In a hand</div>
             <div class="era">2000s</div>
-            <div class="person" aria-label="older woman with short hair"><span class="person-icon">👩‍🦱</span></div>
+            <div class="person" aria-label="older woman with short brown hair"><span class="age-avatar age-short" aria-hidden="true"></span></div>
           </div>
           <div class="step">
             <div class="future-mark" aria-label="Question mark for the future">?</div>
             <div class="step-title">What next?</div>
             <div class="era">2030s</div>
-            <div class="person" aria-label="woman with white hair"><span class="person-icon">👩‍🦳</span></div>
+            <div class="person" aria-label="woman with white hair"><span class="age-avatar age-adult age-white" aria-hidden="true"></span></div>
           </div>
         </div>
       </article>
