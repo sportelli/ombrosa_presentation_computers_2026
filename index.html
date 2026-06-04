@@ -281,18 +281,70 @@
       line-height: 1;
     }
 
+    .tiles.hidden-tiles {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      max-width: min(820px, 52vw);
+    }
+
+    .reveal-zone {
+      display: grid;
+      place-items: center;
+      width: 100%;
+    }
+
+    .reveal-zone .hidden-tiles {
+      display: none;
+    }
+
+    .reveal-zone.revealed .hidden-tiles {
+      display: grid;
+    }
+
+    .reveal-zone.revealed .reveal-prompt {
+      display: none;
+    }
+
+    .reveal-prompt {
+      width: min(28vw, 300px);
+      aspect-ratio: 1;
+      border-radius: 50%;
+      border: 5px solid rgba(30, 41, 59, 0.12);
+      background: #fff1a6;
+      color: var(--blue);
+      box-shadow: var(--shadow);
+      font-size: clamp(96px, 15vw, 210px);
+      font-weight: 950;
+      line-height: 1;
+      cursor: pointer;
+      transition: transform 140ms ease;
+    }
+
+    .reveal-prompt:hover,
+    .reveal-prompt:focus-visible {
+      transform: translateY(-3px);
+      outline: none;
+    }
+
+    .tile-img {
+      width: 100%;
+      height: clamp(90px, 11vw, 150px);
+      object-fit: cover;
+      border-radius: 6px;
+      background: white;
+    }
+
     .timeline {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
       align-items: stretch;
       gap: clamp(8px, 1.4vw, 18px);
-      width: min(100%, 1100px);
+      width: 100%;
     }
 
     .timeline.five-steps {
       grid-template-columns: repeat(5, minmax(0, 1fr));
-      width: min(100%, 1360px);
-      gap: clamp(6px, 0.75vw, 10px);
+      width: 100%;
+      gap: clamp(10px, 1.2vw, 20px);
     }
 
     .timeline-slide {
@@ -1193,6 +1245,25 @@
         </div>
       </article>
 
+      <article class="slide split reveal-slide" data-notes="Time: 4 min. Ask the children FIRST, before showing anything: where do you see tiny computers around you? Let them guess and name objects out loud (a car, a phone, a watch, the TV...). When they have shared their ideas, tap the big ? to reveal the answers. Big idea: computers became so small they hide inside everyday objects. A car (the big dashboard screen), a smartwatch, a children's learning toy, a microwave with its digital screen, and even a flying drone.">
+        <div>
+          <div class="kicker">Think together</div>
+          <h2>Where do you see tiny computers?</h2>
+          <p>Guess with the class. Then tap the <strong>?</strong> to see.</p>
+        </div>
+        <div class="reveal-zone">
+          <button class="reveal-prompt" type="button" aria-label="Show the answers">?</button>
+          <div class="tiles hidden-tiles" aria-label="Objects that hide a tiny computer">
+            <div class="tile"><img class="tile-img" src="assets/photo-car.jpg" alt="">Car</div>
+            <div class="tile"><img class="tile-img" src="assets/photo-tv.jpg" alt="">Television</div>
+            <div class="tile"><img class="tile-img" src="assets/photo-watch.jpg" alt="">Watch</div>
+            <div class="tile"><img class="tile-img" src="assets/photo-toy.jpg" alt="">Toy</div>
+            <div class="tile"><img class="tile-img" src="assets/photo-microwave.jpg" alt="">Microwave</div>
+            <div class="tile"><img class="tile-img" src="assets/photo-drone.jpg" alt="">Drone</div>
+          </div>
+        </div>
+      </article>
+
       <article class="slide split missing-layout" data-notes="Time: 3 min. Final quiz 1. Show the picture: it has a tower, keyboard and mouse, but the screen is missing. Do not rely on reading: ask them to say the missing part out loud or point to a screen in the room. Expected answer: screen.">
         <div>
           <div class="kicker">Final quiz</div>
@@ -1311,6 +1382,9 @@
       document.querySelectorAll(".feedback").forEach((box) => {
         box.textContent = "";
       });
+      document.querySelectorAll(".reveal-zone.revealed").forEach((zone) => {
+        zone.classList.remove("revealed");
+      });
 
       if (!options.skipUrl) {
         setSlideUrl(current);
@@ -1360,6 +1434,12 @@
         feedback.textContent = button.classList.contains("correct")
           ? quiz.dataset.success
           : "Almost! Let's look at the right answer together.";
+      });
+    });
+
+    document.querySelectorAll(".reveal-prompt").forEach((button) => {
+      button.addEventListener("click", () => {
+        button.closest(".reveal-zone").classList.add("revealed");
       });
     });
 
